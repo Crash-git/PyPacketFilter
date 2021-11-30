@@ -6,34 +6,34 @@ def compute(srcIp, L) : # Computing 13 different metrics per node
     reqSentByte = 0
     reqSentData = 0
 
-    recRecNum = 0
-    recSentNum = 0
-    recRecByte = 0
-    recRecData = 0
-    recSentByte = 0
-    recSentData = 0
+    repRecNum = 0
+    repSentNum = 0
+    repRecByte = 0
+    repRecData = 0
+    repSentByte = 0
+    repSentData = 0
 
     for iter in L:
 	    # Data size metrics
-		# Number of echo requests sent
-        if L[iter][4] = 8:
+        if L[iter][4] = 8: # tracking metrics for echo requests
             if L[iter][1] = srcIp:
-                reqNumSent += 1
-                reqSentByte = reqSentByte + L[iter][3]
-                reqSentData =
+                reqNumSent += 1 # Number of echo requests sent
+                reqSentByte = reqSentByte + L[iter][3] # echo request bytes sent- based on the total size of the frame
+                reqSentData = # echo request bytes sent sent - based on the payload size of the ICMP packet
             if L[iter][2] = srcIp:
-                reqRecNum += 1
-                reqRecByte = reqRecByte + L[iter][3]
-                reqRecData =
-		# Total number of echo request bytes sent - based on the total size of the frame
-		# Total echo request data sent - based on the payload size of the ICMP packet
+                reqRecNum += 1 # Number of echo requests received
+                reqRecByte = reqRecByte + L[iter][3] # echo request bytes received
+                reqRecData =  # echo request data received
 
-		# Number of echo requests received
-		# Total number of echo request bytes received - based on the total size of the frame
-		# Total echo request data received  - based on the payload size of the ICMP packet
-
-		# Number of echo replies sent
-		# Number of echo replies received
+        if L[iter][4] = 1: # tracking metrics for echo replies
+            if L[iter][1] = srcIp:
+                repNumSent += 1 # Number of echo replies sent
+                repSentByte = repSentByte + L[iter][3] # echo reply bytes sent
+                repSentData =  # echo reply data
+            if L[iter][2] = srcIp:
+                repRecNum += 1 # Number of echo replies received
+                repRecByte = repRecByte + L[iter][3] # echo reply bytes received
+                repRecData =  # echo reply data received
 
 	# Time based metrics
 		# Average Round-Trip-Time, the time between sending an Echo-Req and receiving an Echo-Rep, measured in MS
