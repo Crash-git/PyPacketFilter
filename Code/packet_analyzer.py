@@ -4,7 +4,7 @@ from compute_metrics import *
 # FUNCTIONS -----
 
 # MAIN ------
-print("Test")
-filter()
+L = list()
+filter(L)
 parse()
-compute()
+compute("192.168.100.1", M)
