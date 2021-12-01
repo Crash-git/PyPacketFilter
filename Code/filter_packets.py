@@ -29,12 +29,5 @@ def filter( filename, L) :
 	
 
 
-L1 = []
-L2 = []
-L3 = []
-L4 = []
-filter("Node1", L1)
-filter("Node2", L2)
-filter("Node3", L3)
-filter("Node4", L4)
+
 
