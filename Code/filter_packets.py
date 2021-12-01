@@ -6,24 +6,35 @@
 def filter( filename, L) :
 	f = open( filename + ".txt", 'r' )
 	line = f.readline()
-
+    
 	while "\n" in line:
 		if "ICMP" in line:
 			if ("Echo (ping) reply") in line :
 				splitline = line.strip().split()
 				L.append(splitline)
-				print(splitline)
+				
 			elif ("Echo (ping) request") in line :
 				splitline = line.strip().split()	
 				L.append(splitline)
-				print(splitline)
+				
 		
 		line = f.readline()
-	if "Node1" in filename:
-		writefile = open( filename + "_filter.txt", 'w' )	
-		print("file made")
+
+	writefile = open( filename + "_filter.txt", 'w' )
+	for iter in L:
+   		writefile.write(iter[0] + "," + iter[1] + "," + iter[2] + "," + iter[3] + "," + iter[4] + "," + iter[5]  + "," + iter[6] + " " + iter[7] + " " + iter[8] + "," + iter[9] + iter[10] + iter[11] + "," + iter[12] + " " + iter[13] + " " + iter[14] + "\n")
+    
+	f.close()
+	writefile.close()	
+	
 
 
-L = []
-filter("Node1", L)
+L1 = []
+L2 = []
+L3 = []
+L4 = []
+filter("Node1", L1)
+filter("Node2", L2)
+filter("Node3", L3)
+filter("Node4", L4)
 
