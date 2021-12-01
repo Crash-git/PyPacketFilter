@@ -15,7 +15,7 @@ def compute(srcIp, L) : # Computing 13 different metrics per node
 
     for iter in L:
 	    # Data size metrics
-        if L[iter][4] == 8: # tracking metrics for echo requests
+        if L[iter][8] == "request": # tracking metrics for echo requests, index for ICMP type and comparison changed for the test packet
             if L[iter][1] == srcIp:
                 reqNumSent += 1 # Number of echo requests sent
                 reqSentByte = reqSentByte + (int(L[iter][3]) + 14) # echo request bytes sent- based on the total size of the frame
@@ -34,6 +34,7 @@ def compute(srcIp, L) : # Computing 13 different metrics per node
                 repRecNum += 1 # Number of echo replies received
                 repRecByte = repRecByte + (int(L[iter][3]) + 14) # echo reply bytes received
                 repRecData = repRecData + (int(L[iter][3]) - 28) # echo reply data received
+                print("Echo rep received")
 
 	# Time based metrics
 		# Average Round-Trip-Time, the time between sending an Echo-Req and receiving an Echo-Rep, measured in MS
