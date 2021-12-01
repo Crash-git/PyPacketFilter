@@ -15,22 +15,22 @@ def compute(srcIp, L) : # Computing 13 different metrics per node
 
     for iter in L:
 	    # Data size metrics
-        if L[iter][4] = 8: # tracking metrics for echo requests
-            if L[iter][1] = srcIp:
+        if L[iter][4] == 8: # tracking metrics for echo requests
+            if L[iter][1] == srcIp:
                 reqNumSent += 1 # Number of echo requests sent
                 reqSentByte = reqSentByte + (int(L[iter][3]) + 14) # echo request bytes sent- based on the total size of the frame
                 reqSentData = reqSentData + (int(L[iter][3]) - 28) # echo request bytes sent sent - based on the payload size of the ICMP packet
-            if L[iter][2] = srcIp:
+            if L[iter][2] == srcIp:
                 reqRecNum += 1 # Number of echo requests received
                 reqRecByte = reqRecByte + (int(L[iter][3]) + 14) # echo request bytes received
                 reqRecData = reqRecData + (int(L[iter][3]) - 28) # echo request data received
 
-        if L[iter][4] = 1: # tracking metrics for echo replies
-            if L[iter][1] = srcIp:
+        if L[iter][4] == 1: # tracking metrics for echo replies
+            if L[iter][1] == srcIp:
                 repNumSent += 1 # Number of echo replies sent
                 repSentByte = repSentByte + (int(L[iter][3]) + 14) # echo reply bytes sent
                 repSentData = repSentData + (int(L[iter][3]) - 28) # echo reply data
-            if L[iter][2] = srcIp:
+            if L[iter][2] == srcIp:
                 repRecNum += 1 # Number of echo replies received
                 repRecByte = repRecByte + (int(L[iter][3]) + 14) # echo reply bytes received
                 repRecData = repRecData + (int(L[iter][3]) - 28) # echo reply data received
