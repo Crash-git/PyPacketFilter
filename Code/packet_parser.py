@@ -20,5 +20,3 @@ def parse():
 			L.append(content)
 		print(L)
 	return L
-	
-parse()

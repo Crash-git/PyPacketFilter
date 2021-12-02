@@ -3,10 +3,11 @@
 #filtering wiresharks for ICMP packets
 
 
-def filter( filename, L) :
+def filter( filename) :
 	f = open( filename + ".txt", 'r' )
 	line = f.readline()
-    
+	L = list()
+
 	while "\n" in line:
 		if "ICMP" in line:
 			if ("Echo (ping) reply") in line :
