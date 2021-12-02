@@ -18,29 +18,27 @@ def compute(srcIp, L) : # Computing 13 different metrics per node
 	    # Data size metrics
         #print(str(L[iter][4]))
         if L[iter][4] == str(8): # tracking metrics for echo requests, index for ICMP type and comparison changed for the test packet
-            print(str(L[iter][4]) + "\n" + str(L[iter]))
             if L[iter][2] == srcIp:
                 reqSentNum += 1 # Number of echo requests sent
-                reqSentByte = reqSentByte + (int(L[iter][3]) + 14) # echo request bytes sent- based on the total size of the frame
-                reqSentData = reqSentData + (int(L[iter][3]) - 28) # echo request bytes sent sent - based on the payload size of the ICMP packet
+                reqSentByte = reqSentByte + (int(L[iter][3])) # echo request bytes sent- based on the total size of the frame
+                reqSentData = reqSentData + (int(L[iter][3]) - 42) # echo request bytes sent sent - based on the payload size of the ICMP packet
 
             if L[iter][2] != srcIp:
                 reqRecNum += 1 # Number of echo requests received
-                reqRecByte = reqRecByte + (int(L[iter][3]) + 14) # echo request bytes received
-                reqRecData = reqRecData + (int(L[iter][3]) - 28) # echo request data received
+                reqRecByte = reqRecByte + (int(L[iter][3])) # echo request bytes received
+                reqRecData = reqRecData + (int(L[iter][3]) - 42) # echo request data received
 
 
         if L[iter][4] == str(0): # tracking metrics for echo replies
-            print(str(L[iter][4]) + "\n" + str(L[iter]))
             if L[iter][2] == srcIp:
                 repSentNum += 1 # Number of echo replies sent
-                repSentByte = repSentByte + (int(L[iter][3]) + 14) # echo reply bytes sent
-                repSentData = repSentData + (int(L[iter][3]) - 28) # echo reply data
+                repSentByte = repSentByte + (int(L[iter][3])) # echo reply bytes sent
+                repSentData = repSentData + (int(L[iter][3]) - 42) # echo reply data
 
             if L[iter][2] != srcIp:
                 repRecNum += 1 # Number of echo replies received
-                repRecByte = repRecByte + (int(L[iter][3]) + 14) # echo reply bytes received
-                repRecData = repRecData + (int(L[iter][3]) - 28) # echo reply data received
+                repRecByte = repRecByte + (int(L[iter][3])) # echo reply bytes received
+                repRecData = repRecData + (int(L[iter][3]) - 42) # echo reply data received
 
     print("ECHO REQ - Num Received: " + str(reqRecNum) + ", Num Sent: " + str(reqSentNum) + ", Bytes Received: " + str(reqRecByte) + ", Bytes Sent: " + str(reqSentByte) + ", Data Rec: " + str(reqRecData) + ", Data Sent: " + str(reqSentData))
     print("ECHO REP - Num Received: " + str(repRecNum) + ", Num Sent: " + str(repSentNum) + ", Bytes Received: " + str(repRecByte) + ", Bytes Sent: " + str(repSentByte) + ", Data Rec: " + str(repRecData) + ", Data Sent: " + str(repSentData))
