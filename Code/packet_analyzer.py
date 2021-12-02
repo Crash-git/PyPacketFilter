@@ -14,9 +14,11 @@ filter("Node1", L1)
 #filter("Node3", L3)
 #filter("Node4", L4)
 parse(L1)
-#print(L1)
-compute("192.168.100.1", L1)
-#print(L1)
-#compute("192.168.100.2,", L2)
-#compute("192.168.200.1,", L3)
-#compute("192.168.200.2,", L4)
+node1 = parse(L1)[0]
+node2 = parse(L1)[1]
+node3 = parse(L1)[2]
+node4 = parse(L1)[3]
+compute("192.168.100.1", node1)
+#compute("192.168.100.2,", node2)
+#compute("192.168.200.1,", node3)
+#compute("192.168.200.2,", node4)
