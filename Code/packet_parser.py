@@ -17,7 +17,7 @@ def parse(L):
 			elif ("Echo (ping) reply" in content[4]):
 				content[4] = "0"
 			L.append(content)
-		print(L)
+		#print(L)
 
 L = []
-parse(L)
+#parse(L)
