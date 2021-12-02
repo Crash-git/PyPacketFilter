@@ -10,17 +10,6 @@ def parse(num):
 	reader = csv.reader(f, delimiter=",")
 	included_cols = [0, 1, 2, 5, 6, 8, 9]
 
-<<<<<<< HEAD
-		for row in reader:
-			content = list(row[i] for i in included_cols)
-			if ("Echo (ping) request" in content[4]):
-				content[4] = "8"
-			elif ("Echo (ping) reply" in content[4]):
-				content[4] = "0"
-			L.append(content)
-		print(L)
-	return L
-=======
 	for row in reader:
 		content = list(row[i] for i in included_cols)
 		if ("Echo (ping) request" in content[4]):
@@ -30,6 +19,3 @@ def parse(num):
 		L.append(content)
 	print(L)
 	return L
-
-parse()
->>>>>>> 0061abdd06bc753585c17312d8201176368419b3
