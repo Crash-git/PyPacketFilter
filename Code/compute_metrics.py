@@ -16,7 +16,7 @@ def compute(srcIp, L) : # Computing 13 different metrics per node
 
 
     for iter in range(0, len(L), 1):
-        print(L[iter][0])
+        #print(L[iter][0])
 	    # Data size metrics
         #print(str(L[iter][4]))
         if L[iter][5] == str(8): # tracking metrics for echo requests, index for ICMP type and comparison changed for the test packet
