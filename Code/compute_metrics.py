@@ -1,12 +1,13 @@
-def compute(srcIp, L) : # Computing 13 different metrics per node
-    print("compute method called for IP: " + srcIp)
+import csv
+
+def compute(srcIp, L, node) : # Computing 13 different metrics per node
     reqRecNum = 0
     reqSentNum = 0
     reqRecByte = 0
     reqRecData = 0
     reqSentByte = 0
     reqSentData = 0
-
+    
     repRecNum = 0
     repSentNum = 0
     repRecByte = 0
@@ -16,9 +17,7 @@ def compute(srcIp, L) : # Computing 13 different metrics per node
 
 
     for iter in range(0, len(L), 1):
-        #print(L[iter][0])
 	    # Data size metrics
-        #print(str(L[iter][4]))
         if L[iter][5] == str(8): # tracking metrics for echo requests, index for ICMP type and comparison changed for the test packet
             if L[iter][2] == srcIp:
                 reqSentNum += 1 # Number of echo requests sent
@@ -41,9 +40,8 @@ def compute(srcIp, L) : # Computing 13 different metrics per node
                 repRecNum += 1 # Number of echo replies received
                 repRecByte = repRecByte + (int(L[iter][4])) # echo reply bytes received
                 repRecData = repRecData + (int(L[iter][4]) - 42) # echo reply data received
-
-    print("ECHO REQ - Num Received: " + str(reqRecNum) + ", Num Sent: " + str(reqSentNum) + ", Bytes Received: " + str(reqRecByte) + ", Bytes Sent: " + str(reqSentByte) + ", Data Rec: " + str(reqRecData) + ", Data Sent: " + str(reqSentData))
-    print("ECHO REP - Num Received: " + str(repRecNum) + ", Num Sent: " + str(repSentNum) + ", Bytes Received: " + str(repRecByte) + ", Bytes Sent: " + str(repSentByte) + ", Data Rec: " + str(repRecData) + ", Data Sent: " + str(repSentData))
+    
+   
 
     # Time based metrics
     req_sent = [] #requests sent
@@ -101,13 +99,13 @@ def compute(srcIp, L) : # Computing 13 different metrics per node
     reqGoodput = round(reqGoodput, 1) # round up to the nearest  first decimal
     
     # Avg. reply delay (in microseconds so *1000), the time between a node receiving an Echo-Req and sending an Echo-Rep
-    for iter in req_rec: 
+    for iter in rep_sent: 
         #grab the needed info
         reqTime = float(iter[1]) 
         reqSrc = iter[2]
         reqDest = iter[3]
         reqSeq = iter[6]
-        for iter in rep_sent:      
+        for iter in req_rec:      
             #grab the needed info
             repTime = float(iter[1])
             repSrc = iter[2]
@@ -115,12 +113,11 @@ def compute(srcIp, L) : # Computing 13 different metrics per node
             repSeq = iter[6]
             #check to see if the reply that we sent is for the current req that was received 
             if (reqDest == repSrc) & (reqSeq == repSeq):
-                rtt = repTime - reqTime
+                rtt = reqTime - repTime
                 delayTotal = delayTotal + rtt
                 break
-    avgReplyDelay=round(((delayTotal/repSentNum)*1000000),2)
+    avgReplyDelay=round(((delayTotal/repSentNum)*1000000), 2)
 
-    print("Average RTT: " + str(avgRTT) + ", Echo Request Throughput(kB/sec):  " + str(reqThroughput) + ", Echo Request Goodput (kB/sec): " + str(reqGoodput) + ", Average Reply Delay (us): "+ str(avgReplyDelay))
 	# Distance metrics
     # Avg. number of hops per Echo-Req (one hop per change of network, min. one hop)
     for iter in req_sent:
@@ -139,6 +136,43 @@ def compute(srcIp, L) : # Computing 13 different metrics per node
                 totalHops = totalHops + hops 
                 break
     avgHops = round((totalHops / reqSentNum), 2)
-    print("Average Echo Request Hop Count: "+ str(avgHops))
+
+    # output to csv 
+    nodeList=[node]
+    outputEchoCountCat = ["Echo Requests Sent", "Echo Request Received", "Echo Replies Sent","Echo Replies Received"]#data size echo counts categories list
+    outputEchoCountVal = [reqSentNum, reqRecNum, repSentNum, repRecNum] #variable echo counts variable list
+
+    #datametric requests
+    outputReqSentCat = ["Echo Request Bytes Sent (bytes)", "Echo Request Data Sent (bytes)"] #data size metrics Echo Requests Sent categories list
+    outputReqSentDataVal = [reqSentByte, reqSentData]#data size metrics Echo Requests Sent  data variable list
+
+    outputReqRecCat = ["Echo Request Bytes Received (bytes)", "Echo Request Data Received (bytes)"]#data size metrics Echo Request Recieved categories list
+    outputReqRecDataVal = [reqRecByte, reqRecData ]#data size metrics Echo request rec variable list
+
+    #Time base output
+    outputAvgRTT = ["Average RTT (milliseconds)", avgRTT] # Average RTT list
+    outputThroughput = ["Echo Request Throughput (kB/sec)", reqThroughput]# Echo Request Throughput (kB/sec) list
+    outputGoodput = ["Echo Request Goodput (kB/sec)", reqGoodput]  # Echo Request Goodput (kB/sec) list 
+    outputReplyDelay = ["Average Reply Delay (microseconds)", avgReplyDelay]  # Average Reply Delay (microseconds) list
+ 
+    outputAvgHop = ["Average Echo Request Hop Count", avgHops] # Average echo request hop count list
+
+    with open('Output.csv', 'a', newline = '') as csvfile:
+        my_writer = csv.writer(csvfile, delimiter = ',')
+        my_writer.writerow(nodeList)
+        my_writer.writerow("")
+        my_writer.writerow(outputEchoCountCat)
+        my_writer.writerow(outputEchoCountVal)
+        my_writer.writerow(outputReqSentCat)
+        my_writer.writerow(outputReqSentDataVal)
+        my_writer.writerow(outputReqRecCat)
+        my_writer.writerow(outputReqRecDataVal)
+        my_writer.writerow("")
+        my_writer.writerow(outputAvgRTT)
+        my_writer.writerow(outputThroughput)
+        my_writer.writerow(outputGoodput)
+        my_writer.writerow(outputReplyDelay)
+        my_writer.writerow(outputAvgHop)
+        my_writer.writerow("")
 
 
